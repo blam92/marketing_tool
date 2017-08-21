@@ -1,34 +1,53 @@
 
 # coding: utf-8
-#IMPORTS
 
-import nltk
-from nltk.corpus import stopwords
-import pandas as pd
-from sklearn.feature_extraction.text import CountVectorizer
-import numpy as np
-from nltk.stem.porter import *
+# ### Hacer Click en Kernel > Restart and Run All
+# ### Luego Introducir nombre de Archivo en la función
 
 
 
+
+# In[3]:
+
+
+
+
+# In[4]:
 
 #Armamos una Función que tome como Parámetro el Excel con las palabras, y me devuelva un excel con las palabras
 #y su grupo.
 
+
+# In[17]:
+
 def agrupador(archivo):
+    
+    #IMPORTS
+
+    import nltk
     nltk.download('stopwords')
+    from nltk.corpus import stopwords
     stop = stopwords.words('spanish')
-    stop.append('mas')   
+    stop.append('mas')
+
+    import pandas as pd
+    from sklearn.feature_extraction.text import CountVectorizer
+    import numpy as np
+
+    from nltk.stem.porter import PorterStemmer
+
+    #Instanceo Stemmer y CountVectorizer
+
+    stemmer = PorterStemmer()
+    analyzer = CountVectorizer(strip_accents='ascii',stop_words=stop).build_analyzer()
+
     #Armo la función que fitea ambas cosas
     def stemmed_words(kws):
         return (stemmer.stem(w) for w in analyzer(kws))
 
-    #Instanceo Stemmer y CountVectorizer
-    stemmer = PorterStemmer()
-    analyzer = CountVectorizer(strip_accents='ascii',stop_words=stop).build_analyzer()
     
     #Leo Excel con Kws
-    Data = pd.read_excel(archivo+'.xlsx',skiprows=10)
+    Data = pd.read_excel(archivo,skiprows=10)
     #Me quedo solo con la columna de Keywords del archivo
     kws = Data['Keyword']
     print('Excel Cargado')
@@ -66,11 +85,12 @@ def agrupador(archivo):
     print('Armando los Grupos...')
 
     #Le doy nombre a la Columna y aplico la función que va a traer solo los que no son nulos.
-    grupos['AdGroup'] = sorted_mat.apply(lambda x: ' - '.join([unicode(y) for y in x if y != 0]), axis=1)
+    grupos['AdGroup'] = sorted_mat.apply(lambda x: ' - '.join([unicode(y).title() for y in x if y != 0]), axis=1)
 
     #Agrego el grupo a la Data original
-    Data['Python AdGroup'] = grupos['AdGroup']
+    grupos['Keyword'] = Data['Keyword']
 
     #Devuelvo Data
-    Data.to_excel(archivo+'_PythonAdGroups.xlsx')
+    grupos.to_excel(archivo+'_PythonAdGroups.xlsx')
+    print('Las Kws y sus AdGroups se encuentran en > '+archivo+'_PythonAdGroups.xlsx')
 
