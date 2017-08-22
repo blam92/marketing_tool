@@ -12,6 +12,8 @@ PATH_FOR_UPLOADS = 'xsl_upload/uploads'
 PATH_FOR_DOWNLOAD = 'xsl_upload/download/grouped_key_words.csv'
 app.secret_key = 'super_secret'
 
+
+
 def allowed_file(filename):
 	return ('.' in filename) and (filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS)
 
