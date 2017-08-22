@@ -13,7 +13,6 @@ bitarray==0.8.1
 blaze==0.10.1
 bokeh==0.12.4
 boto==2.45.0
-Bottleneck==1.2.0
 cffi==1.9.1
 chardet==2.3.0
 chest==0.2.3
@@ -30,7 +29,7 @@ cycler==0.10.0
 Cython==0.25.2
 cytoolz==0.8.2
 dask==0.13.0
-datashape==0.5.4
+datashape==0.5.2
 decorator==4.0.11
 dill==0.2.5
 docutils==0.13.1
@@ -165,4 +164,5 @@ xlrd==1.0.0
 XlsxWriter==0.9.6
 xlwings==0.10.2
 xlwt==1.2.0
+Bottleneck==1.2.0
 -e git+https://github.com/blam92/marketing_tool.git@f057e846a60ccb2f26a318a3c3ef8951c560f15d#egg=xsl_upload
